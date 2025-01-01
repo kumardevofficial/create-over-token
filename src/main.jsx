@@ -5,6 +5,9 @@ import "./index.css";
 import App from "./App.jsx";
 import OvertokenGuide from "./components/Content/OvertokenGuide.jsx";
 import MainSection from "./components/MainSection/MainSection.jsx";
+import CheckTostify from "./components/tostify/CheckTostify.jsx";
+import ErrorPage from "./components/ErrorPage/ErrorPage.jsx";
+import FAQSection from "./components/FAQ/FaqSection.jsx";
 
 const router = createBrowserRouter([
   {
@@ -13,11 +16,24 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <MainSection />,
+        element: (
+          <>
+            <MainSection /> <FAQSection />
+          </>
+        ),
       },
       {
         path: "/over-token-guide", // No leading slash for nested routes
-        element: <OvertokenGuide />,
+        element: (
+          <>
+            <OvertokenGuide />
+            <FAQSection />
+          </>
+        ),
+      },
+      {
+        path: "*",
+        element: <ErrorPage />,
       },
     ],
   },
