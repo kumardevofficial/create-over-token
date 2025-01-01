@@ -8,6 +8,9 @@ import MainSection from "./components/MainSection/MainSection.jsx";
 import CheckTostify from "./components/tostify/CheckTostify.jsx";
 import ErrorPage from "./components/ErrorPage/ErrorPage.jsx";
 import FAQSection from "./components/FAQ/FaqSection.jsx";
+import UserTokenCard from "./components/UserTokenCard/UserTokenCard.jsx";
+import HomePage from "./HomePage/HomePage.jsx";
+import StepMainBox from "./components/StepByStep/StepMainBox.jsx";
 
 const router = createBrowserRouter([
   {
@@ -18,7 +21,9 @@ const router = createBrowserRouter([
         index: true,
         element: (
           <>
-            <MainSection /> <FAQSection />
+            {" "}
+            <HomePage />
+            <FAQSection />
           </>
         ),
       },
@@ -28,6 +33,18 @@ const router = createBrowserRouter([
           <>
             <OvertokenGuide />
             <FAQSection />
+          </>
+        ),
+      },
+      {
+        path: "/user-token",
+        element: <UserTokenCard />,
+      },
+      {
+        path: "/create-token",
+        element: (
+          <>
+            <MainSection /> <FAQSection />
           </>
         ),
       },

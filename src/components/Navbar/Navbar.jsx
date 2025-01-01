@@ -19,12 +19,14 @@ const Navbar = () => {
         <Link to="/" className="hover:text-blue-500 font-bold">
           Home
         </Link>
-
+        <Link to="/create-token" className="hover:text-blue-500 font-bold">
+          Create Token
+        </Link>
+        <Link to="/user-token" className="hover:text-blue-500 font-bold">
+          User token
+        </Link>
         <Link to="/over-token-guide" className="hover:text-blue-500 font-bold">
           Guide
-        </Link>
-        <Link to="/" className="hover:text-blue-500 font-bold">
-          Over explorer
         </Link>
         {/* <a href="#" className="flex items-center space-x-1">
           <span>Perps</span>
