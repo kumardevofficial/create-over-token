@@ -1,5 +1,6 @@
 import React from "react";
 import herogirl from "../assets/pngegg.png";
+import { Link } from "react-router-dom";
 
 const HomePage = () => {
   return (
@@ -13,9 +14,12 @@ const HomePage = () => {
             <br />
             ANY WHERE
           </h1>
-          <button className="bg-white text-black font-bold px-6 py-3 mt-6 rounded-full shadow-lg hover:bg-gray-400">
-            Get Started
-          </button>
+          <Link to="/create-token">
+            {" "}
+            <button className="bg-white text-black font-bold px-6 py-3 mt-6 rounded-full shadow-lg hover:bg-gray-400">
+              Get Started
+            </button>
+          </Link>
         </div>
 
         {/* Image Section */}
