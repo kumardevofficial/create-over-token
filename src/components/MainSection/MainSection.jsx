@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
+import { OverContext } from "../../Store/Create-over-store";
 
 const MainSection = () => {
+  const { walletAdds, setVisiblityTrue } = useContext(OverContext);
   // bg-gradient-to-br from-[#0f0c29] via-[#302b63] to-[#24243e] mt-4
   return (
     <div className="flex justify-center items-center h-auto ">
@@ -95,12 +97,16 @@ const MainSection = () => {
             </label>
           </div>
 
-          <button
-            type="submit"
-            className="w-full py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition"
+          <div
+            className="w-full py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition flex justify-center items-center cursor-pointer"
+            onClick={() => {
+              walletAdds == "Connect Wallet"
+                ? setVisiblityTrue()
+                : console.log("hellow");
+            }}
           >
-            Connect Wallet
-          </button>
+            {walletAdds != "Connect Wallet" ? "Create Token" : "Connect Wallet"}
+          </div>
         </form>
       </div>
     </div>

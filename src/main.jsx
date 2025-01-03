@@ -11,6 +11,7 @@ import FAQSection from "./components/FAQ/FaqSection.jsx";
 import UserTokenCard from "./components/UserTokenCard/UserTokenCard.jsx";
 import HomePage from "./HomePage/HomePage.jsx";
 import StepMainBox from "./components/StepByStep/StepMainBox.jsx";
+import Account from "./components/Account/Account.jsx";
 
 const router = createBrowserRouter([
   {
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
       {
         path: "*",
         element: <ErrorPage />,
+      },
+      {
+        path: "/account",
+        element: <Account />,
       },
     ],
   },

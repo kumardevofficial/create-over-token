@@ -1,58 +1,58 @@
-import React from "react";
+import React, { useContext } from "react";
 import okx from "../../assets/OKX.png";
 import mm from "../../assets/metamask.png";
 import "react-toastify/dist/ReactToastify.css";
+import { OverContext } from "../../Store/Create-over-store";
 
-const ConnectWallet = ({
-  walletConnectControl,
-  visiblity,
-  showSuccessToast,
-  showErrorToast,
-  setWalletAdd,
-}) => {
+const ConnectWallet = () => {
+  const {
+    SetWallAddx,
+    walletAdds,
+    setVisiblityTrue,
+    wallVisiblity,
+    setVisiblityFalse,
+    showSuccessToast,
+    showErrorToast,
+  } = useContext(OverContext);
+
   const wallets = [
     { name: "MetaMask", image: mm },
     { name: "OKX Wallet", image: okx },
   ];
 
-  // Utility function to format wallet address
   const formatAddress = (address) => {
-    let theAddress = `${address.slice(0, 3)}...${address.slice(-4)}`;
-    setWalletAdd(theAddress);
+    SetWallAddx(`${address.slice(0, 6)}...${address.slice(-4)}`);
+    setVisiblityFalse();
   };
 
-  // Function to connect wallet
   const connectWallet = async () => {
     if (window.ethereum) {
       try {
         const accounts = await window.ethereum.request({
           method: "eth_requestAccounts",
         });
-        console.log("Connected account:", accounts[0]);
         formatAddress(accounts[0]);
         showSuccessToast();
-        walletConnectControl(false); // Hide the modal
-        return accounts[0];
       } catch (error) {
         console.error("Connection error:", error);
-        showErrorToast(
-          "User rejected connection or an unexpected error occurred."
-        );
       }
     } else {
-      console.error("MetaMask not detected.");
-      showErrorToast("MetaMask or compatible wallet is not installed.");
+      alert("Please install MetaMask or another compatible wallet.");
+      showErrorToast("unable to connect");
     }
   };
 
-  if (!visiblity) return null;
+  console.log(wallVisiblity);
+  if (wallVisiblity) return null;
 
   return (
     <>
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
         <div className="relative bg-white rounded-lg shadow-lg p-6 max-w-md w-full">
           <button
-            onClick={() => walletConnectControl(false)}
+            onClick={() => {
+              setVisiblityFalse();
+            }}
             className="absolute top-2 right-2 text-gray-500 hover:text-gray-800"
           >
             ✖
@@ -61,13 +61,10 @@ const ConnectWallet = ({
             Connect Wallet
           </h2>
           <p className="text-sm text-gray-600 mb-6 text-center">
-            Start by connecting with one of the wallets below.
-            <br />
-            Be sure to store your private keys or seed phrase securely.
-            <br />
-            Never share them with anyone.
+            Start by connecting with one of the wallets below. Keep your private
+            keys secure.
           </p>
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 gap-4">
             {wallets.map((wallet, index) => (
               <div
                 key={index}

@@ -1,13 +1,28 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { OverContext } from "../../Store/Create-over-store";
 
-const Navbar = ({ walletConnectControl, visiblity, walletAdd }) => {
+const Navbar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [dropdownTimer, setDropdownTimer] = useState(null);
 
-  const walletvisiblity = (visiblityValue) => {
-    if (!visiblity) {
-      walletConnectControl(visiblityValue);
-    }
+  const {
+    SetWallAddx,
+    walletAdds,
+    setVisiblityTrue,
+    wallVisiblity,
+    setVisiblityFalse,
+  } = useContext(OverContext);
+
+  const handleMouseEnter = () => {
+    if (dropdownTimer) clearTimeout(dropdownTimer);
+    setDropdownOpen(true);
+  };
+
+  const handleMouseLeave = () => {
+    const timer = setTimeout(() => setDropdownOpen(false), 300); // Delay for smooth transition
+    setDropdownTimer(timer);
   };
 
   return (
@@ -35,14 +50,39 @@ const Navbar = ({ walletConnectControl, visiblity, walletAdd }) => {
         </Link>
       </nav>
 
-      {/* Right Section */}
-      <div className="hidden md:flex items-center space-x-4">
-        <button
-          className="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-2xl text-white"
-          onClick={() => walletvisiblity(true)}
-        >
-          {walletAdd === "" ? "Connect Wallet" : walletAdd}
-        </button>
+      {/* Right Section with Dropdown */}
+      <div
+        className="hidden md:flex items-center space-x-4 cursor-pointer relative"
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
+        <div className="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-2xl text-white">
+          <div
+            onClick={() => {
+              setVisiblityTrue();
+            }}
+          >
+            {walletAdds}
+          </div>
+          {dropdownOpen && walletAdds != "Connect Wallet" && (
+            <div className="absolute top-full mt-2 bg-white border rounded shadow-lg w-32 box-border">
+              <Link
+                to="/account"
+                className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+              >
+                Account
+              </Link>
+              <div
+                className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                onClick={() => {
+                  SetWallAddx("Connect Wallet");
+                }}
+              >
+                Diconnect
+              </div>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Hamburger Menu */}
@@ -58,7 +98,7 @@ const Navbar = ({ walletConnectControl, visiblity, walletAdd }) => {
         >
           <path
             fillRule="evenodd"
-            d="M3 5h14a1 1 0 010 2H3a1 1 0 010-2zM3 10h14a1 1 0 010 2H3a1 1 0 010-2zM3 15h14a1 1 0 010 2H3a1 1 0 010-2z"
+            d="M3 5h14a1 1 0 010 2H3a1 1 0 010-2zM3 10h14a1 1 0 010 2H3a1 1 0 010-2zM3 15h14a1 1 0 010-2z"
             clipRule="evenodd"
           />
         </svg>
@@ -88,8 +128,8 @@ const Navbar = ({ walletConnectControl, visiblity, walletAdd }) => {
           <div className="px-4 py-2 bg-gray-700 flex items-center justify-between">
             <span>Polygon</span>
             <button className="bg-blue-500 hover:bg-blue-600 px-3 py-1 rounded text-white">
-              {walletAdd === "" ? "Connect Wallet" : walletAdd}
-              {console.log("is it visible" + walletAdd)}
+              {walletAdds}
+              {console.log(walletAdds)}
             </button>
           </div>
         </nav>
